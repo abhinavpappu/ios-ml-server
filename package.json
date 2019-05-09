@@ -1,0 +1,19 @@
+{
+  "name": "ios-ml-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apappu9/ios-ml-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apappu9/ios-ml-server/issues"
+  },
+  "homepage": "https://github.com/apappu9/ios-ml-server#readme"
+}
