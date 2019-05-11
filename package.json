@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/apappu9/ios-ml-server/issues"
   },
-  "homepage": "https://github.com/apappu9/ios-ml-server#readme"
+  "homepage": "https://github.com/apappu9/ios-ml-server#readme",
+  "dependencies": {
+    "@tensorflow-models/knn-classifier": "^1.1.0",
+    "@tensorflow-models/mobilenet": "^1.0.1",
+    "@tensorflow/tfjs-node": "^1.1.2",
+    "canvas": "^2.5.0",
+    "express": "^4.16.4"
+  }
 }
