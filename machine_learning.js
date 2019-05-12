@@ -10,60 +10,11 @@ const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
 
 async function train(images, isBase64) {
-    let time = Date.now();
-    const classifier = knnClassifier.create();
-    const net = await mobilenet.load();
-    console.log(`Loaded knn-classifier and mobilenet in ${Date.now() - time}ms`);
     
-    // Train on the good examples (provided by user of themselves)
-    time = Date.now();
-    for (const imageString of images) {
-        const image = await createImage(imageString, isBase64);
-        const activation = net.infer(image, 'conv_preds');
-        classifier.addExample(activation, 'match');
-    }
-    console.log(`Training on good examples complete in ${Date.now() - time}ms`);
-    
-    // Train on the bad examples (random faces and objects)
-    time = Date.now();
-    const faces = await readdir('counterexamples/faces');
-    for (const face of faces) {
-        const image = await createImage(`counterexamples/faces/${face}`, false);
-        const activation = net.infer(image, 'conv_preds');
-        classifier.addExample(activation, 'face');
-    }
-    const objects = await readdir('counterexamples/objects');
-    for (const obj of objects) {
-        const image = await createImage(`counterexamples/objects/${obj}`, false);
-        const activation = net.infer(image, 'conv_preds');
-        classifier.addExample(activation, 'object');
-    }
-    console.log(`Training on bad examples complete in ${Date.now() - time}ms`);
-    
-    // Save model
-    time = Date.now();
-    const existingModels = await readdir('./models');
-    const filename = getRandomFilename('.json', existingModels);
-    await save(classifier, `models/${filename}`);
-    console.log(`Saved model in ${Date.now() - time}ms`);
-    
-    return filename;
 }
 
 async function predict(model, image, isBase64) { // model is a filename pointing to the saved model
-    let time = Date.now();
-    const classifier = await load(`models/${model}`);
-    const net = await mobilenet.load();
-    console.log(`Loaded knn-classifier and mobilenet in ${Date.now() - time}ms`);
-    
-    // Predict image class
-    time = Date.now();
-    const actualImage = await createImage(image, isBase64);
-    const activation = net.infer(actualImage, 'conv_preds');
-    const result = await classifier.predictClass(activation);
-    console.log(`Predicted '${result.label}' with a confidence of ${result.confidences[result.label]} in ${Date.now() - time}ms`);
-    
-    return result;
+
 }
 
 function createImage(src, isBase64) {
