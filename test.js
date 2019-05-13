@@ -5,6 +5,7 @@ const { promisify } = require("util");
 const readdir = promisify(fs.readdir);
 
 async function main() {
+    console.log('Testing');
     // const files = await readdir('./test_faces/training');
     // const filepaths = files.map(filename => './test_faces/training/' + filename);
     

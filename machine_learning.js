@@ -59,10 +59,13 @@ async function train(images, isBase64) {
 }
 
 async function predict(model, image, isBase64) { // model is a filename pointing to the saved model
-    // Load the model
+    log('Predicting')
+    
     const data = JSON.parse(await readFile(`./models/${model}`));
+    log('Loaded model');
     
     const vector = await imageToVector(image, isBase64);
+    log('Converted image to vector');
     
     return distanceBetween(data.vector, vector);
 }
