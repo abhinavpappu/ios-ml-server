@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/apappu9/ios-ml-server#readme",
   "dependencies": {
-    "@tensorflow-models/knn-classifier": "^1.1.0",
-    "@tensorflow-models/mobilenet": "^1.0.1",
-    "@tensorflow/tfjs-node": "^1.1.2",
     "canvas": "^2.5.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "facenet": "^0.10.3",
+    "flash-store": "^0.14.1",
+    "numjs": "^0.16.0"
   }
 }
