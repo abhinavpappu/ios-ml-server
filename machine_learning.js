@@ -24,25 +24,33 @@ async function train(images, isBase64) {
         const vector = await imageToVector(image, isBase64);
         vectors.push(vector);
     }
+    // vectors = vectors.map(vector => vector.tolist());
     
     log('Converted images to vectors');
+
+    // console.log(vectors[0]);
     
     // Find the average of all the vectors
-    const averageVector = Array(vectors[0].length).fill(0);
+    let averageVector = Array(vectors[0].length).fill(0);
+    // console.log(averageVector)
     for (const vector of vectors) {
         averageVector = addVectors(averageVector, vector);
     }
+    // console.log(averageVector);
     for (const [index, value] of averageVector.entries()) {
         averageVector[index] = value / vectors.length;
     }
-    
+
     // save the model
     const jsonData = JSON.stringify({
         vector: averageVector,
         numImages: images.length,
     });
+    // console.log(averageVector);
     const existingModels = await readdir('./models');
+    console.log(existingModels)
     const filename = getRandomFilename('.json', existingModels);
+    console.log(filename);
     await writeFile(`./models/${filename}`, jsonData);
     
     log('Saved model');
@@ -64,12 +72,12 @@ async function imageToVector(image, isBase64) {
     const actualImage = await createImage(image, isBase64);
     
     // find face from image (we assume that there is only one, and get the first face found)
-    const face = await facenet.align(actualImage);
+    const face = (await facenet.align(actualImage))[0];
     
     // find the vector associated with the face
     const vector = await facenet.embedding(face);
     
-    return vector
+    return vector.tolist();
 }
 
 function createImage(src, isBase64) {
@@ -88,10 +96,13 @@ function createImage(src, isBase64) {
 
 function addVectors(v1, v2, multiplier = 1) {
     // we assume that they are the same size
+    // console.log(v1);
+    // console.log(v2);
     const v1Copy = v1.slice(0);
     for (const [index, value] of v2.entries()) {
         v1Copy[index] += multiplier * value;
     }
+    // console.log(v1Copy);
     return v1Copy;
 }
 

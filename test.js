@@ -1,18 +1,16 @@
 const { train, predict } = require("./machine_learning.js");
 const fs = require("fs");
 const { promisify } = require("util");
-const knnClassifier = require("@tensorflow-models/knn-classifier");
-const mobilenet = require('@tensorflow-models/mobilenet');
 
 const readdir = promisify(fs.readdir);
 
 async function main() {
-    const files = await readdir('./test_faces/training');
-    const filepaths = files.map(filename => './test_faces/training/' + filename);
+    // const files = await readdir('./test_faces/training');
+    // const filepaths = files.map(filename => './test_faces/training/' + filename);
     
-    const modelName = await train(filepaths, false);
+    // const modelName = await train(filepaths.slice(0, 1), false);
     
-    console.log(modelName);
+    // console.log(modelName);
     
     // const testImage = './test_faces/test/'
     
@@ -24,7 +22,7 @@ async function main() {
     // console.log(matchResults2);
     // console.log(failResults);
     
-    console.log(await predict(modelName, './test_faces/test/fail2.jpg', false));
+    console.log(await predict('gue72bdi7k.json', './test_faces/test/fail.jpg', false));
 }
 
 main();
