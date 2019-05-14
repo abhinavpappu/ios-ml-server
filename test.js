@@ -24,6 +24,7 @@ async function main() {
     // console.log(failResults);
     
     console.log(await predict('gue72bdi7k.json', './test_faces/test/fail.jpg', false));
+    return true;
 }
 
 main();
