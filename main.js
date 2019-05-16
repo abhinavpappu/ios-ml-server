@@ -6,20 +6,24 @@ const port = 3000;
 // const host = '0.0.0.0';
 // const host = '127.0.0.1';
 
+app.use(express.json({limit: '16mb', strict: false}));
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
-})
+});
 
 app.post('/train', (req, res) => {
-    const images = JSON.parse(req.query.images);
+    console.log(req.headers['content-length'] / 1000 + 'kB')
+    const images = req.body.images;
     train(images, true).then(modelName => res.send(modelName));
 });
 
 app.post('/predict', (req, res) => {
-    const image = req.query.image;
-    predict(image, true).then(distance => res.send(distance));
-})
+    console.log(req.headers['content-length'] / 1000 + 'kB');
+    const {model, image} = req.body;
+    predict(model, image, true).then(distance => res.send(String(distance)));
+});
 
-app.listen(port, host, () => {
-   console.log(`Listening on ${host}:${port}`); 
+app.listen(port, () => {
+   console.log(`Listening on port ${port}`); 
 });
